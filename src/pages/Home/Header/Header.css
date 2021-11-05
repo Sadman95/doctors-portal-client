@@ -1,0 +1,10 @@
+.headerAfter::after{
+    content: '';
+    background-color: #3A4256;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px;
+    min-height: 700px;
+    z-index: -1;
+}

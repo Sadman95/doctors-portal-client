@@ -5,7 +5,7 @@ import Navigation from './pages/Shared/Navigation/Navigation';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Router>
         <Navigation></Navigation>
         <Switch>
