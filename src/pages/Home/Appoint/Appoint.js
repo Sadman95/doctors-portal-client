@@ -7,7 +7,7 @@ const appointBg= {
     backgroundImage: "url('https://i.ibb.co/6HkJXdw/appointment-bg.png')",
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'top-right',
+    backgroundPosition: 'right',
     position: 'relative',
     zIndex: 1
 }
