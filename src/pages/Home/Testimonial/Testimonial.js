@@ -30,9 +30,15 @@ const reviews = [
 ]
 
 
+const testimonialBg = {
+    background: "url('https://i.ibb.co/Q6VBMgT/comma-bg.png') top right no-repeat",
+    backgroundSize: 'contain'
+}
+
+
 const Testimonial = () => {
     return (
-        <Container sx={{mt: 16}}>
+        <Container sx={{mt: 16, ...testimonialBg}}>
             <Typography color='info.main' variant='p' component='div' sx={{fontWeight: 'bold', mb: 2}}>
                   TESTIMONIAL
               </Typography>
