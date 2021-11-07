@@ -5,15 +5,13 @@ import AddAppointment from './pages/Appointment/AddAppointment/AddAppointment';
 import Appointment from './pages/Appointment/Appointment';
 import AddDoctor from './pages/Home/Doctors/AddDoctor/AddDoctor';
 import Home from './pages/Home/Home/Home';
-import LogIn from './pages/LogIn/LogIn';
-import Footer from './pages/Shared/Footer/Footer';
-import Navigation from './pages/Shared/Navigation/Navigation';
+import LogIn from './pages/LogIn/Login/LogIn';
+import Register from './pages/LogIn/Register/Register';
 
 function App() {
   return (
     <div className='App'>
       <Router>
-        <Navigation></Navigation>
         <Switch>
           <Route exact path='/'>
             <Home></Home>
@@ -23,6 +21,9 @@ function App() {
           </Route>
           <Route exact path='/logIn'>
             <LogIn></LogIn>
+          </Route>
+          <Route exact path='/register'>
+            <Register></Register>
           </Route>
           <Route exact path='/addDoctor'>
             <AddDoctor></AddDoctor>
@@ -34,7 +35,6 @@ function App() {
             <Appointment></Appointment>
           </Route>
         </Switch>
-        <Footer></Footer>
       </Router>
     </div>
   );

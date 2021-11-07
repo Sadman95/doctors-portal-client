@@ -8,10 +8,13 @@ import HeaderBottom from '../Header/HeaderBottom/HeaderBottom';
 import OurBlogs from '../OurBlogs/OurBlogs';
 import Services from '../Services/Services';
 import Testimonial from '../Testimonial/Testimonial';
+import Navigation from '../../Shared/Navigation/Navigation'
+import Footer from '../../Shared/Footer/Footer';
 
 const Home = () => {
     return (
         <div>
+            <Navigation></Navigation>
             <Header></Header>
             <HeaderBottom></HeaderBottom>
             <Services></Services>
@@ -21,6 +24,7 @@ const Home = () => {
             <OurBlogs></OurBlogs>
             <Doctors></Doctors>
             <ContactUs></ContactUs>
+            <Footer></Footer>
         </div>
     );
 };
