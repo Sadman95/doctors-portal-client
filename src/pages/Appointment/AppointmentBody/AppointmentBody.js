@@ -22,7 +22,7 @@ const AppointmentBody = (props) => {
 
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         {appointments.map((appointment, index) => (
-          <LoadAppointment key={index} appointment={appointment}></LoadAppointment>
+          <LoadAppointment currentDate={currentDate} key={index} appointment={appointment}></LoadAppointment>
         ))}
       </Grid>
         </Container>

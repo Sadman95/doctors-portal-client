@@ -1,8 +1,14 @@
 import { Button, Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
+import AppointModal from '../AppointModal/AppointModal';
 
-const LoadAppointment = ({appointment}) => {
-    const {appointmentTitle, appointmentSchedule, availableSpaces} = appointment;
+const LoadAppointment = (props) => {
+    const {currentDate} = props;
+    const [openModal, setOpenModal] = React.useState(false);
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
+
+    const {appointmentTitle, appointmentSchedule, availableSpaces} = props.appointment;
     return (
         <Grid item xs={4} sm={4} md={4}>
             <Paper sx={{ textAlign: 'center', py: 4}}>
@@ -15,7 +21,8 @@ const LoadAppointment = ({appointment}) => {
                 <Typography sx={{mb: 1}} color='text.secondary' variant='small' component='p'>
                     {availableSpaces} spaces available
                 </Typography>
-                <Button variant='contained' color='info'>BOOK APPOINTMENT</Button>
+                <Button onClick={handleOpen} variant='contained' color='info'>BOOK APPOINTMENT</Button>
+                <AppointModal appointmentTitle={appointmentTitle} appointmentSchedule={appointmentSchedule} currentDate={currentDate} openModal={openModal} handleClose={handleClose}></AppointModal>
             </Paper>
           </Grid>
     );

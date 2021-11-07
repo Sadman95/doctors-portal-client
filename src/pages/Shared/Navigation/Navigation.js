@@ -34,7 +34,7 @@ const Navigation = () => {
           <Link style={{textDecoration: 'none', color: 'white'}} to='/addDoctor'>
           <Button variant='text' color="inherit">Add Doctor</Button>
           </Link>
-          <Button color="inherit">Login</Button>
+          <Button onClick={()=>history.push('/logIn')} color="inherit">Login</Button>
           <Link style={{textDecoration: 'none', color: 'white'}} to='/appointments'>
           <Button variant='text' color="inherit">Appointments</Button>
           </Link>
