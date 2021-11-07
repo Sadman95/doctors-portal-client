@@ -7,10 +7,13 @@ import AddDoctor from './pages/Home/Doctors/AddDoctor/AddDoctor';
 import Home from './pages/Home/Home/Home';
 import LogIn from './pages/LogIn/Login/LogIn';
 import Register from './pages/LogIn/Register/Register';
+import AuthProvider from './contexts/AuthProvider';
+import PrivateRoute from './pages/PrivateRoute/PrivateRoute';
 
 function App() {
   return (
     <div className='App'>
+      <AuthProvider>
       <Router>
         <Switch>
           <Route exact path='/'>
@@ -31,11 +34,12 @@ function App() {
           <Route exact path='/addAppointment'>
             <AddAppointment></AddAppointment>
           </Route>
-          <Route exact path='/appointments'>
+          <PrivateRoute exact path='/appointments'>
             <Appointment></Appointment>
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Router>
+      </AuthProvider>
     </div>
   );
 }

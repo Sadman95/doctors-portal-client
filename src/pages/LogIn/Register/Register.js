@@ -8,12 +8,21 @@ import {
   TextField,
   Alert,
 } from "@mui/material";
+import { useLocation, useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
+import GoogleIcon from '@mui/icons-material/Google';
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
+  const location = useLocation();
+  const history = useHistory();
+  const redirect_url = location.state?.from || '/register'; 
+
   const [loginData, setLoginData] = useState({});
   const [error, setError] = useState("");
+  const {signInWithGoogle, authError} = useAuth();
 
+  /* Handle On Blur Input Field */
   const handleField = (e) => {
     const field = e.target.name;
     const fieldValue = e.target.value;
@@ -22,6 +31,7 @@ const Register = () => {
     setLoginData(newLoginData);
   };
 
+  /* Sign in With Email & Password */
   const handleSignIn = (e) => {
     e.preventDefault();
     if (loginData.password !== loginData.password_2) {
@@ -41,6 +51,19 @@ const Register = () => {
     console.log(loginData);
     e.target.reset();
   };
+
+  /* Handle Google Sign In */
+  const handleGoogleSignIn = async () =>{
+        try{
+          await signInWithGoogle();
+        }
+        catch{
+          setError(authError);
+        }
+        finally{
+          history.push(redirect_url);
+        }
+  }
   return (
     <Container sx={{ mt: 16 }}>
       <Box sx={{ flexGrow: 1 }}>
@@ -110,6 +133,7 @@ const Register = () => {
                   <NavLink to="/logIn">LogIn</NavLink>
                 </Typography>
               </form>
+              <Button onClick={handleGoogleSignIn} sx={{mt: 2}} variant='outlined' color='primary'><GoogleIcon/></Button>
             </Box>
           </Grid>
           <Grid item sm={4} md={6}>

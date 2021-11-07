@@ -11,7 +11,14 @@ import Testimonial from '../Testimonial/Testimonial';
 import Navigation from '../../Shared/Navigation/Navigation'
 import Footer from '../../Shared/Footer/Footer';
 
+
 const Home = () => {
+    /* const [open, setOpen] = React.useState(true);
+
+    const handleClick = () => {
+        setOpen(!open);
+      }; */
+
     return (
         <div>
             <Navigation></Navigation>
