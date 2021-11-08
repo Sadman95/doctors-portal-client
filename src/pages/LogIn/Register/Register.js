@@ -14,6 +14,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
+  const {registerUser, updateUser} = useAuth();
+
   const location = useLocation();
   const history = useHistory();
   const redirect_url = location.state?.from || '/register'; 
@@ -31,8 +33,8 @@ const Register = () => {
     setLoginData(newLoginData);
   };
 
-  /* Sign in With Email & Password */
-  const handleSignIn = (e) => {
+  /* Sign Up With Email & Password */
+  const handleRegister = (e) => {
     e.preventDefault();
     if (loginData.password !== loginData.password_2) {
       setError("Password didn't match");
@@ -47,6 +49,9 @@ const Register = () => {
       );
       return;
     }
+    registerUser(loginData.email, loginData.password);
+    updateUser(loginData.name);
+    alert('Registered successfully');
     setError("");
     console.log(loginData);
     e.target.reset();
@@ -83,7 +88,17 @@ const Register = () => {
               >
                 Register
               </Typography>
-              <form onSubmit={handleSignIn}>
+              <form onSubmit={handleRegister}>
+              <TextField
+                  sx={{ width: "75%" }}
+                  type="text"
+                  onBlur={handleField}
+                  name="name"
+                  id="standard-basic"
+                  label="Your Name"
+                  variant="standard"
+                />
+
                 <TextField
                   sx={{ width: "75%" }}
                   type="email"

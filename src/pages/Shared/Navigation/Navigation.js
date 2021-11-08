@@ -69,7 +69,7 @@ const Navigation = () => {
           alt="userPhoto"
           src={user.photoURL}
         />}
-        label={user.displayName}
+        label={user.displayName || user.email}
         color='info'
       />
       
