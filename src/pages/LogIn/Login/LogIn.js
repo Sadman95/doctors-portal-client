@@ -10,10 +10,9 @@ import {
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import Preloader from "../../Preloader/Preloader";
 
 const LogIn = () => {
-  const { signInUser, resetPassword, authError, loading } = useAuth();
+  const { signInUser, resetPassword, authError, user } = useAuth();
   const [loginData, setLoginData] = useState({});
 
   const handleField = (e) => {
@@ -41,9 +40,6 @@ const LogIn = () => {
     });
   };
 
-  if(loading){
-    return <Preloader></Preloader>
-  }
 
   return (
     <Container sx={{ mt: 16 }}>
@@ -88,6 +84,11 @@ const LogIn = () => {
                 {authError && (
                   <Alert sx={{ width: "75%", mt: 2 }} severity="error">
                     {authError}
+                  </Alert>
+                )}
+                {user.email && (
+                  <Alert sx={{ width: "75%", mt: 2 }} severity="success">
+                    Log In Successful
                   </Alert>
                 )}
 

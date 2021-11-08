@@ -7,6 +7,7 @@ import {
   Grid,
   TextField,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { useLocation, useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
@@ -14,7 +15,6 @@ import GoogleIcon from '@mui/icons-material/Google';
 import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
-  const {registerUser, updateUser} = useAuth();
 
   const location = useLocation();
   const history = useHistory();
@@ -22,7 +22,7 @@ const Register = () => {
 
   const [loginData, setLoginData] = useState({});
   const [error, setError] = useState("");
-  const {signInWithGoogle, authError} = useAuth();
+  const {signInWithGoogle, authError, registerUser, user, loading} = useAuth();
 
   /* Handle On Blur Input Field */
   const handleField = (e) => {
@@ -33,10 +33,23 @@ const Register = () => {
     setLoginData(newLoginData);
   };
 
+
+  if(loading){
+    return <CircularProgress />
+  }
+
   /* Sign Up With Email & Password */
   const handleRegister = (e) => {
     e.preventDefault();
-    if (loginData.password !== loginData.password_2) {
+    if(!/^[a-zA-Z ]{2,30}$/.test(loginData.name)){
+      setError('Name must only contain letters more than 2 to 30 characters');
+      return;
+    }
+    else if(!/^\S+@\S+\.\S+$/.test(loginData.email)){
+      setError('Invalid email format');
+      return;
+    }
+    else if (loginData.password !== loginData.password_2) {
       setError("Password didn't match");
       return;
     } else if (
@@ -50,9 +63,7 @@ const Register = () => {
       return;
     }
     registerUser(loginData.email, loginData.password);
-    updateUser(loginData.name);
-    alert('Registered successfully');
-    setError("");
+    // updateUser(loginData.name);
     console.log(loginData);
     e.target.reset();
   };
@@ -129,9 +140,14 @@ const Register = () => {
                   variant="standard"
                 />
 
-                {error && (
+                {(authError || error)&& (
                   <Alert sx={{ width: "75%", mt: 2 }} severity="error">
                     {error}
+                  </Alert>
+                )}
+                {user.email && (
+                  <Alert sx={{ width: "75%", mt: 2 }} severity="success">
+                    User created successfully
                   </Alert>
                 )}
 
