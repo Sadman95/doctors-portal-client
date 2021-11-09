@@ -23,6 +23,7 @@ const Navigation = () => {
   
 
   const {user, logOut} = useAuth();
+  // console.log(user);
   const history = useHistory();
 
   const handleSignOut = async () =>{
@@ -60,28 +61,29 @@ const Navigation = () => {
           <Button variant='text' color="inherit">Appointments</Button>
           </Link>
           {
-            !user.email ? 
+            user.displayName || user.email ? 
+            <Chip
+            avatar={<Avatar
+              alt="userPhoto"
+              src={user?.photoURL}
+            />}
+            label={user?.displayName || user?.email}
+            color='info'
+          />:
             <Button onClick={()=>history.push('/logIn')} color="inherit">Login</Button>
-            :
             
-              <Chip
-        avatar={<Avatar
-          alt="userPhoto"
-          src={user.photoURL}
-        />}
-        label={user.displayName || user.email}
-        color='info'
-      />
+            
+             
       
           }
 
           {
-            !user.email && <Button onClick={()=>history.push('/register')} color="inherit">Register</Button>
+            (user.displayName || user.email) ? '' : <Button onClick={()=>history.push('/register')} color="inherit">Register</Button>
 
           }
 
         {
-          user.email && <Button onClick={handleSignOut} variant='text' color='warning'>
+          (user.displayName || user.email) && <Button onClick={handleSignOut} variant='text' color='warning'>
           <LogoutIcon/>
         </Button>
         }

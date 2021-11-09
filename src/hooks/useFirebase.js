@@ -2,9 +2,10 @@ import initAuthentication from "../pages/LogIn/Firebase/firebase.init";
 import { useState, useEffect } from "react";
 import {
   GoogleAuthProvider,
+  FacebookAuthProvider,
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword ,
+  signInWithEmailAndPassword,
   signInWithPopup,
   onAuthStateChanged,
   updateProfile,
@@ -22,42 +23,62 @@ const useFirebase = () => {
   const auth = getAuth();
 
   /* Create New User / Register User */
-  const registerUser = ( email, password) =>{
+  const registerUser = (name, email, password, history) => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
-    .then((result) => {
-      setUser(result.user);
-    })
-    .catch((error) => {
-      setAuthError(error.message);
-    })
-    .finally(() => {
+      .then((result) => {
+        setUser(result.user);
+        updateUser(name);
+        history.replace('/');
+        console.log(result.user);
+      })
+      .catch((error) => {
+        setAuthError(error.message);
+      })
+      .finally(() => {
         setLoading(false);
-    })
-    setAuthError('');
-  }
+      });
+    setAuthError("");
+  };
 
   /* Sign In With Email & Password */
-  const signInUser = (email, password) =>{
-      setLoading(true);
-    signInWithEmailAndPassword (auth, email, password)
-    .then(result =>{
+  const signInUser = (email, password) => {
+    setLoading(true);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((result) => {
         setUser(result.user);
-    })
-    .catch(error =>{
+      })
+      .catch((error) => {
         setAuthError(error.message);
-    })
-    .finally(() =>{
+      })
+      .finally(() => {
         setLoading(false);
-    })
-  }
-
+      });
+      setAuthError('');
+  };
 
   /* Google Sign In */
   const signInWithGoogle = () => {
     setLoading(true);
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        setAuthError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+
+  /* Facebook sign in */
+  const signInWithFacebook = () =>{
+        setLoading(true);
+        const fbProvider = new FacebookAuthProvider();
+        signInWithPopup(auth, fbProvider)
       .then((result) => {
         setUser(result.user);
       })
@@ -82,23 +103,17 @@ const useFirebase = () => {
     return () => unsubscribed;
   }, [auth]);
 
-
   /* Update Current User */
-  const updateUser = name =>{
+  const updateUser = (name) => {
     updateProfile(auth.currentUser, {
-        displayName: `${name}`,
-      }).then((result) => {
-            setUser(result.user);
-      }).catch((error) => {
-           setAuthError(error.message);
-      });
-  }
-
+      displayName: name,
+    }).then((result) => {});
+  };
 
   /* Password reset email */
-  const resetPassword = email =>{
-        return sendPasswordResetEmail(auth, email)
-  }
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
 
   /* Sign Out */
   const logOut = () => {
@@ -120,6 +135,7 @@ const useFirebase = () => {
     signInUser,
     updateUser,
     signInWithGoogle,
+    signInWithFacebook,
     resetPassword,
     logOut,
   };

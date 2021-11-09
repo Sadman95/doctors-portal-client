@@ -22,7 +22,7 @@ const LoadAppointment = (props) => {
                     {availableSpaces} spaces available
                 </Typography>
                 <Button onClick={handleOpen} variant='contained' color='info'>BOOK APPOINTMENT</Button>
-                <AppointModal appointmentTitle={appointmentTitle} appointmentSchedule={appointmentSchedule} currentDate={currentDate} openModal={openModal} handleClose={handleClose}></AppointModal>
+                <AppointModal handleClose={handleClose} appointmentTitle={appointmentTitle} appointmentSchedule={appointmentSchedule} currentDate={currentDate} openModal={openModal} handleClose={handleClose}></AppointModal>
             </Paper>
           </Grid>
     );

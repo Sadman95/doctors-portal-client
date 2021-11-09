@@ -6,14 +6,22 @@ import {
   Grid,
   TextField,
   Alert,
+  ButtonGroup,
 } from "@mui/material";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import GoogleIcon from '@mui/icons-material/Google';
+import Facebook from "@mui/icons-material/Facebook";
 
 const LogIn = () => {
-  const { signInUser, resetPassword, authError, user } = useAuth();
+  const { signInUser,signInWithGoogle, signInWithFacebook, resetPassword, authError, setAuthError, user } = useAuth();
   const [loginData, setLoginData] = useState({});
+
+  const location = useLocation();
+  const history = useHistory();
+  const redirect_url = location.state?.from || '/login'; 
+
 
   const handleField = (e) => {
     const field = e.target.name;
@@ -24,14 +32,45 @@ const LogIn = () => {
   };
 
   /* sign in */
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     const email = loginData.email;
     const password = loginData.password;
-    signInUser(email, password);
+    try{
+      await signInUser(email, password);
+    }
+    finally{
+      history.push(redirect_url);
+    }
     console.log(loginData);
     e.target.reset();
   };
+
+   /* Handle Google Sign In */
+   const handleGoogleSignIn = async () =>{
+    try{
+      await signInWithGoogle();
+    }
+    catch{
+      setAuthError(authError);
+    }
+    finally{
+      history.replace(redirect_url);
+    }
+}
+
+/* handle fb sign in */
+const handleFacebookSignIn = async () =>{
+try{
+  await signInWithFacebook();
+}
+catch{
+  setAuthError(authError);
+}
+finally{
+  history.replace(redirect_url);
+}
+}
 
   /* reset password */
   const handlePasswordReset = (email) => {
@@ -92,7 +131,7 @@ const LogIn = () => {
                   </Alert>
                 )}
 
-                <Typography variant="subtitle2" color="red">
+                <Typography sx={{mt: 2}} variant="subtitle2" color="red">
                   Forgot your password?
                   <Button variant='text' color='warning' onClick={() => handlePasswordReset(loginData.email)}>Reset</Button>
                 </Typography>
@@ -108,6 +147,14 @@ const LogIn = () => {
                   Don't have an account? Please{" "}
                   <NavLink to="/register">Register</NavLink>
                 </Typography>
+
+                <Typography color='GrayText' variant='subtitle2' component='div'>
+                  -------------------or--------------------
+                </Typography>
+                <ButtonGroup sx={{mt: 2}}>
+                <Button onClick={handleGoogleSignIn} variant='outlined' color='primary'><GoogleIcon/></Button>
+              <Button onClick={handleFacebookSignIn} variant='outlined' color='primary'><Facebook/></Button>
+                </ButtonGroup>
               </form>
             </Box>
           </Grid>

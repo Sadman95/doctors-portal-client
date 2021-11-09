@@ -5,8 +5,10 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
-import { Typography } from "@mui/material";
+import {  Typography } from "@mui/material";
 import useAuth from "../../../../hooks/useAuth";
+import axios from "axios";
+import swal from "sweetalert";
 
 const style = {
   position: "absolute",
@@ -21,20 +23,25 @@ const style = {
 };
 
 const AppointModal = (props) => {
-  const {user} = useAuth();
-  const { currentDate, appointmentSchedule, appointmentTitle } = props;
+  const { user } = useAuth();
+  const { currentDate, appointmentSchedule, appointmentTitle, openModal, handleClose } = props;
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
-    console.log(data);
-    reset();
+    axios.post("http://localhost:4000/allAppointments", data).then((res) => {
+      if (res.data.insertedId) {
+        swal("Congratulations!", "Your appointment is taken successfully!", "success");
+        handleClose();
+      }
+    });
+    
   };
 
-  const { openModal, handleClose } = props;
+
 
   return (
     <Modal
@@ -73,8 +80,8 @@ const AppointModal = (props) => {
             <input
               style={{ width: "80%", padding: 12, marginBottom: 12 }}
               type="text"
-              defaultValue={user.displayName || ''}
-              {...register("name", { required: true })}
+              defaultValue={user.displayName}
+              {...register("patientName", { required: true })}
             />
             <br />
             <input
@@ -87,14 +94,14 @@ const AppointModal = (props) => {
             <input
               style={{ width: "80%", padding: 12, marginBottom: 12 }}
               type="email"
-              defaultValue={user.email || ''}
+              defaultValue={user.email}
               {...register("email", { required: true })}
             />
             <br />
             <input
               style={{ width: "80%", padding: 12, marginBottom: 12 }}
               type="text"
-              value={currentDate.toDateString()}
+              value={currentDate.toLocaleDateString()}
               {...register("date", { required: true })}
             />
             <br />

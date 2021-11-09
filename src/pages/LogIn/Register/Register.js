@@ -9,20 +9,18 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import { useLocation, useHistory } from "react-router";
-import { NavLink } from "react-router-dom";
-import GoogleIcon from '@mui/icons-material/Google';
+import { useHistory, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
-const Register = () => {
 
-  const location = useLocation();
+
+const Register = () => {
   const history = useHistory();
-  const redirect_url = location.state?.from || '/register'; 
+
 
   const [loginData, setLoginData] = useState({});
   const [error, setError] = useState("");
-  const {signInWithGoogle, authError, registerUser, user, loading} = useAuth();
+  const { authError, registerUser, user, loading} = useAuth();
 
   /* Handle On Blur Input Field */
   const handleField = (e) => {
@@ -31,11 +29,6 @@ const Register = () => {
     const newLoginData = { ...loginData };
     newLoginData[field] = fieldValue;
     setLoginData(newLoginData);
-  };
-
-
-  if(loading){
-    return <CircularProgress />
   }
 
   /* Sign Up With Email & Password */
@@ -62,27 +55,16 @@ const Register = () => {
       );
       return;
     }
-    registerUser(loginData.email, loginData.password);
+    registerUser(loginData.name, loginData.email, loginData.password, history);
     // updateUser(loginData.name);
     console.log(loginData);
     e.target.reset();
   };
 
-  /* Handle Google Sign In */
-  const handleGoogleSignIn = async () =>{
-        try{
-          await signInWithGoogle();
-        }
-        catch{
-          setError(authError);
-        }
-        finally{
-          history.push(redirect_url);
-        }
-  }
+ 
   return (
     <Container sx={{ mt: 16 }}>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
         <Grid container spacing={{ sm: 2, md: 3 }} columns={{ sm: 4, md: 12 }}>
           <Grid
             item
@@ -90,7 +72,8 @@ const Register = () => {
             md={6}
             sx={{ display: "flex", alignItems: "center" }}
           >
-            <Box>
+            {
+              !loading && <Box>
               <Typography
                 color="coral"
                 sx={{ mb: 6 }}
@@ -164,8 +147,12 @@ const Register = () => {
                   <NavLink to="/logIn">LogIn</NavLink>
                 </Typography>
               </form>
-              <Button onClick={handleGoogleSignIn} sx={{mt: 2}} variant='outlined' color='primary'><GoogleIcon/></Button>
-            </Box>
+              
+            </Box> 
+            }
+            {
+              loading && <CircularProgress/>
+            }
           </Grid>
           <Grid item sm={4} md={6}>
             <img
