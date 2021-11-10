@@ -1,14 +1,17 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import '../src/index.css'
-import AddAppointment from './pages/Appointment/AddAppointment/AddAppointment';
 import Appointment from './pages/Appointment/Appointment';
-import AddDoctor from './pages/Home/Doctors/AddDoctor/AddDoctor';
 import Home from './pages/Home/Home/Home';
 import LogIn from './pages/LogIn/Login/LogIn';
 import Register from './pages/LogIn/Register/Register';
 import AuthProvider from './contexts/AuthProvider';
 import PrivateRoute from './pages/PrivateRoute/PrivateRoute';
+import Dashboard from './pages/Dashboard/Dashboard/Dashboard';
+import AddDoctor from './pages/Home/Doctors/AddDoctor/AddDoctor';
+import MakeAdmin from './pages/Dashboard/MakeAdmin/MakeAdmin';
+import AddAppointment from './pages/Appointment/AddAppointment/AddAppointment';
+import AdminRoute from './pages/AdminRoute/AdminRoute';
 
 function App() {
   return (
@@ -28,15 +31,21 @@ function App() {
           <Route exact path='/register'>
             <Register></Register>
           </Route>
-          <Route exact path='/addDoctor'>
-            <AddDoctor></AddDoctor>
-          </Route>
-          <Route exact path='/addAppointment'>
-            <AddAppointment></AddAppointment>
-          </Route>
           <PrivateRoute exact path='/appointments'>
             <Appointment></Appointment>
           </PrivateRoute>
+          <Route exact path='/dashboard'>
+            <Dashboard></Dashboard>
+          </Route>
+          <AdminRoute exact path='/dashboard/addDoctor'>
+            <AddDoctor></AddDoctor>
+          </AdminRoute>
+          <AdminRoute exact path='/dashboard/makeAdmin'>
+            <MakeAdmin></MakeAdmin>
+          </AdminRoute>
+          <AdminRoute exact path='/dashboard/addService'>
+            <AddAppointment></AddAppointment>
+          </AdminRoute>
         </Switch>
       </Router>
       </AuthProvider>

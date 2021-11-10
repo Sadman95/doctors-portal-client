@@ -11,21 +11,34 @@ import { useHistory } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { Avatar, Chip } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 
 const Navigation = () => {
 
-  /* const {open, handleClick} = props;
-
-  const handleArrow = () =>{
-    handleClick();
-  } */
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   
 
   const {user, logOut} = useAuth();
   // console.log(user);
   const history = useHistory();
 
+
+  /* dashboard */
+  const myDashboard = () =>{
+    history.push('/dashboard');
+  }
+
+
+  /* log out */
   const handleSignOut = async () =>{
     try{
       await logOut();
@@ -51,31 +64,47 @@ const Navigation = () => {
           <Typography onClick={()=>history.push('/home')} variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Doctor's Portal
           </Typography>
-          <Link style={{textDecoration: 'none', color: 'white'}} to='/addAppointment'>
-          <Button variant='text' color="inherit">Add Appointment</Button>
-          </Link>
-          <Link style={{textDecoration: 'none', color: 'white'}} to='/addDoctor'>
-          <Button variant='text' color="inherit">Add Doctor</Button>
-          </Link>
+          
+          
+          
           <Link style={{textDecoration: 'none', color: 'white'}} to='/appointments'>
           <Button variant='text' color="inherit">Appointments</Button>
           </Link>
           {
             user.displayName || user.email ? 
+            <Button
+        id="basic-button"
+        aria-controls="basic-menu"
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
             <Chip
             avatar={<Avatar
               alt="userPhoto"
-              src={user?.photoURL}
+              src={user.photoURL}
             />}
-            label={user?.displayName || user?.email}
+            label={user.displayName}
             color='info'
-          />:
+          /></Button>:
             <Button onClick={()=>history.push('/logIn')} color="inherit">Login</Button>
             
             
              
       
           }
+          <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={myDashboard}>Dashboard</MenuItem>
+        
+      </Menu>
 
           {
             (user.displayName || user.email) ? '' : <Button onClick={()=>history.push('/register')} color="inherit">Register</Button>

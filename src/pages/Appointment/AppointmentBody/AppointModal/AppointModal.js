@@ -32,6 +32,7 @@ const AppointModal = (props) => {
   } = useForm();
 
   const onSubmit = (data) => {
+    data.serviceName = appointmentTitle;
     axios.post("http://localhost:4000/allAppointments", data).then((res) => {
       if (res.data.insertedId) {
         swal("Congratulations!", "Your appointment is taken successfully!", "success");
