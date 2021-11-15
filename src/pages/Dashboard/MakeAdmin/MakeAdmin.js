@@ -13,7 +13,7 @@ const MakeAdmin = () => {
     const handleMakeAdmin = e =>{
         e.preventDefault();
         const user = {email};
-        fetch('http://localhost:4000/users/admin', {
+        fetch('https://frozen-bastion-33141.herokuapp.com/users/admin', {
             method: 'PUT',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('idToken')}`,

@@ -7,7 +7,7 @@ const AddDoctor = () => {
 
     const { register, handleSubmit,reset, formState: { errors } } = useForm();
   const onSubmit = data => {
-    fetch('http://localhost:4000/doctors', {
+    fetch('https://frozen-bastion-33141.herokuapp.com/doctors', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'

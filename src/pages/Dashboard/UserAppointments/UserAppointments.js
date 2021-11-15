@@ -12,7 +12,7 @@ const UserAppointments = ({date}) => {
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:4000/allAppointments?email=${user.email}&date=${toDate}`, {
+        fetch(`https://frozen-bastion-33141.herokuapp.com/allAppointments?email=${user.email}&date=${toDate}`, {
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('idToken')}`
             }

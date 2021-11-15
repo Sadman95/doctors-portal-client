@@ -9,7 +9,7 @@ const AppointmentBody = (props) => {
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() =>{
-        fetch('http://localhost:4000/appointments')
+        fetch('https://frozen-bastion-33141.herokuapp.com/appointments')
         .then(res => res.json())
         .then(data => setAppointments(data))
     }, [])
