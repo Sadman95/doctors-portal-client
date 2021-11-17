@@ -1,9 +1,9 @@
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import React from 'react';
-import CallIcon from '@mui/icons-material/Call';
+import { Email } from '@mui/icons-material';
 
 const Doctor = ({doctor}) => {
-    const {imgURL, name, phoneNumber} = doctor;
+    const {name, email, photo} = doctor;
 
     return (
         <Grid item xs={4} sm={4} md={4}>
@@ -12,7 +12,7 @@ const Doctor = ({doctor}) => {
         <CardMedia
           component="img"
           height="350"
-          image={imgURL}
+          image={`data:image/*;base64, ${photo}`}
           alt="dr"
         />
         <CardContent sx={{textAlign: 'center'}}>
@@ -20,7 +20,7 @@ const Doctor = ({doctor}) => {
             {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <CallIcon sx={{mb: -1}}/>+{phoneNumber}
+            <Email sx={{mb: -1}}/>{email}
           </Typography>
         </CardContent>
       </CardActionArea>

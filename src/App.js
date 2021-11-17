@@ -34,7 +34,7 @@ function App() {
           <PrivateRoute exact path='/appointments'>
             <Appointment></Appointment>
           </PrivateRoute>
-          <Route exact path='/dashboard'>
+          <Route path='/dashboard'>
             <Dashboard></Dashboard>
           </Route>
           <AdminRoute exact path='/dashboard/addDoctor'>

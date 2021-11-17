@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 const AddAppointment = () => {
     const { register, handleSubmit,reset, formState: { errors } } = useForm();
     const onSubmit = data => {
-      fetch('https://frozen-bastion-33141.herokuapp.com/appointments', {
+      fetch('http://localhost:4000/appointments', {
           method: 'POST',
           headers: {
               'content-type': 'application/json'

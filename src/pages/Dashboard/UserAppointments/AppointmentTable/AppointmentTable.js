@@ -6,13 +6,20 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
+import {useHistory} from 'react-router-dom'
 
 
 
 
 
 const AppointmentTable = ({appointments}) => {
-    
+    const history = useHistory()
+
+    const handlePayment = id =>{
+      history.push(`/dashboard/appointments/${id}`);
+    }
+
     return (
         <div>
              <TableContainer component={Paper}>
@@ -37,7 +44,11 @@ const AppointmentTable = ({appointments}) => {
               </TableCell>
               <TableCell>{row.schedule}</TableCell>
               <TableCell>{row.serviceName}</TableCell>
-              <TableCell></TableCell>
+              <TableCell>
+                {
+                  row.payment ? 'Paid' : <Button onClick={()=>handlePayment(row._id)} variant='contained' color='warning'>Pay</Button>
+                }
+              </TableCell>
               
             </TableRow>
           ))}

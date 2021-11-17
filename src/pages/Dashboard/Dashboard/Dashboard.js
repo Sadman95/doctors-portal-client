@@ -6,12 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -22,6 +17,7 @@ import AddAppointment from "../../Appointment/AddAppointment/AddAppointment";
 import AddDoctor from "../../Home/Doctors/AddDoctor/AddDoctor";
 import MakeAdmin from "../MakeAdmin/MakeAdmin";
 import useAuth from "../../../hooks/useAuth";
+import Payment from "../Payment/Payment";
 
 const drawerWidth = 200;
 
@@ -30,6 +26,7 @@ function Dashboard(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let { path, url } = useRouteMatch();
   const { admin } = useAuth();
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -63,14 +60,7 @@ function Dashboard(props) {
             
           </>
         )}
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        
       </List>
     </div>
   );
@@ -153,6 +143,9 @@ function Dashboard(props) {
         <Switch>
           <Route exact path={path}>
             <DashboardHome></DashboardHome>
+          </Route>
+          <Route path={`${path}/appointments/:appointmentId`}>
+            <Payment></Payment>
           </Route>
           <Route path={`${path}/makeAdmin`}>
             <MakeAdmin></MakeAdmin>

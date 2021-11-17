@@ -24,7 +24,7 @@ const style = {
 
 const AppointModal = (props) => {
   const { user } = useAuth();
-  const { currentDate, appointmentSchedule, appointmentTitle, openModal, handleClose } = props;
+  const { currentDate, price, appointmentSchedule, appointmentTitle, openModal, handleClose } = props;
   const {
     register,
     handleSubmit,
@@ -33,7 +33,8 @@ const AppointModal = (props) => {
 
   const onSubmit = (data) => {
     data.serviceName = appointmentTitle;
-    axios.post("https://frozen-bastion-33141.herokuapp.com/allAppointments", data).then((res) => {
+    data.price = price;
+    axios.post("http://localhost:4000/allAppointments", data).then((res) => {
       if (res.data.insertedId) {
         swal("Congratulations!", "Your appointment is taken successfully!", "success");
         handleClose();

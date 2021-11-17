@@ -144,7 +144,7 @@ const useFirebase = () => {
   /* save new user */
   const saveNewUser = (email, displayName)=> {
     const user = {email, displayName};
-    axios.post('https://frozen-bastion-33141.herokuapp.com/users', user)
+    axios.post('http://localhost:4000/users', user)
     .then(res => console.log(res))
   }
 
@@ -152,13 +152,13 @@ const useFirebase = () => {
   /* update or insert old user */
   const saveOldUser = (email, displayName) =>{
     const user = {email, displayName};
-    axios.put('https://frozen-bastion-33141.herokuapp.com/users', user)
+    axios.put('http://localhost:4000/users', user)
     .then(res => console.log(res))
   }
 
   /* check a user is admin or not */
   useEffect(() =>{
-    fetch(`https://frozen-bastion-33141.herokuapp.com/users/admin/${user.email}`)
+    fetch(`http://localhost:4000/users/admin/${user.email}`)
     .then(res => res.json())
     .then(data => {
       if(data.admin === true){
