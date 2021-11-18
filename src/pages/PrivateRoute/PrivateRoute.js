@@ -1,37 +1,20 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import Preloader from '../Preloader/Preloader';
+import {Navigate, useLocation} from 'react-router-dom'
 
-const PrivateRoute = ({children, ...rest}) => {
+const PrivateRoute = ({children}) => {
     const {user, loading} = useAuth();
+    const location = useLocation()
 
     if(loading){
         return <Preloader></Preloader>
     }
 
-    return (
-        <Route
-        {...rest}
-        render = { ({location}) =>
-            user.email ?
-            children
-            :
-            <Redirect
-                to = {
-                    {
-                        pathname: '/login',
-                        state: {from : location}
-                    }
-                }
-            >
-
-            </Redirect>
-        }
-        >
-
-        </Route>
-    );
+    if(user.email){
+        return children;
+    }
+    return <Navigate to="/login" state={{ from: location }} />;
 };
 
 export default PrivateRoute;

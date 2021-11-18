@@ -9,7 +9,7 @@ import {
   ButtonGroup,
 } from "@mui/material";
 import React, { useState } from "react";
-import { NavLink, useHistory, useLocation } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import GoogleIcon from "@mui/icons-material/Google";
 import Facebook from "@mui/icons-material/Facebook";
@@ -27,7 +27,7 @@ const LogIn = () => {
   const [loginData, setLoginData] = useState({});
 
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const redirect_url = location.state?.from || "/login";
 
   const handleField = (e) => {
@@ -44,9 +44,9 @@ const LogIn = () => {
     const email = loginData.email;
     const password = loginData.password;
     try {
-      await signInUser(email, password);
+      await signInUser(email, password, navigate);
     } finally {
-      history.push(redirect_url);
+      navigate(redirect_url);
     }
     console.log(loginData);
     e.target.reset();
@@ -59,7 +59,7 @@ const LogIn = () => {
     } catch {
       setAuthError(authError);
     } finally {
-      history.replace(redirect_url);
+      navigate(redirect_url);
     }
   };
 
@@ -70,7 +70,7 @@ const LogIn = () => {
     } catch {
       setAuthError(authError);
     } finally {
-      history.replace(redirect_url);
+      navigate(redirect_url);
     }
   };
 

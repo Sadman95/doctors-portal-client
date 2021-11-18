@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { Avatar, Chip } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -29,12 +29,12 @@ const Navigation = () => {
 
   const {user, logOut} = useAuth();
   // console.log(user);
-  const history = useHistory();
+  const navigate = useNavigate();
 
 
   /* dashboard */
   const myDashboard = () =>{
-    history.push('/dashboard');
+    navigate('/dashboard');
   }
 
 
@@ -44,7 +44,7 @@ const Navigation = () => {
       await logOut();
     }
     finally{
-      history.push('/home');
+      navigate('/home');
     }
   }
 
@@ -61,7 +61,7 @@ const Navigation = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography onClick={()=>history.push('/home')} variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography onClick={()=>navigate('/home')} variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Doctor's Portal
           </Typography>
           
@@ -87,7 +87,7 @@ const Navigation = () => {
             label={user.displayName}
             color='info'
           /></Button>:
-            <Button onClick={()=>history.push('/logIn')} color="inherit">Login</Button>
+            <Button onClick={()=>navigate('/logIn')} color="inherit">Login</Button>
             
             
              
@@ -107,7 +107,7 @@ const Navigation = () => {
       </Menu>
 
           {
-            (user.displayName || user.email) ? '' : <Button onClick={()=>history.push('/register')} color="inherit">Register</Button>
+            (user.displayName || user.email) ? '' : <Button onClick={()=>navigate('/register')} color="inherit">Register</Button>
 
           }
 

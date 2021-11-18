@@ -90,10 +90,12 @@ const CheckoutForm = ({appointment}) => {
             //update user appointment after payment:
             const payment = {
                 amount: paymentIntent.amount,
-                transaction: paymentIntent.client_secret.slice('_secret')[0],
+                transaction: paymentIntent.client_secret.split('_secret_')[0],
                 created: paymentIntent.created,
                 last4: paymentMethod.card.last4
             }
+            console.log(payment);
+
             /* error: 404 */
             const url = `http://localhost:4000/usersAppointments/${_id}`;
             fetch(url, {

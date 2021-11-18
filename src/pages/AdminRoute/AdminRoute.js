@@ -1,37 +1,20 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import Preloader from '../Preloader/Preloader';
 
-const AdminRoute = ({children, ...rest}) => {
+const AdminRoute = ({children}) => {
     const {user, loading, admin} = useAuth();
+    const location = useLocation();
 
     if(loading){
         return <Preloader></Preloader>
     }
 
-    return (
-        <Route
-        {...rest}
-        render = { ({location}) =>
-            user.email && admin?
-            children
-            :
-            <Redirect
-                to = {
-                    {
-                        pathname: '/',
-                        state: {from : location}
-                    }
-                }
-            >
-
-            </Redirect>
-        }
-        >
-
-        </Route>
-    );
+    if(user.email && admin){
+        return children;
+    }
+    return <Navigate to="/login" state={{ from: location }} />;
 };
 
 export default AdminRoute;

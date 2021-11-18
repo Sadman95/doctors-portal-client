@@ -3,8 +3,13 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, Container, Typography } from "@mui/material";
 import "./Header.css";
+import { useNavigate } from "react-router";
+
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
   const headerBg = {
     background: "url('https://i.ibb.co/0nh8Bpr/bg.png') left top no-repeat",
     backgroundSize: "cover",
@@ -35,7 +40,7 @@ const Header = () => {
               with special home service.If you want an appointment asap, please
               you are surely can do it from here.
             </Typography>
-            <Button variant="contained" sx={{ bgcolor: "info.main" }}>
+            <Button onClick={()=> navigate('/appointments')} variant="contained" sx={{ bgcolor: "info.main" }}>
               GET APPOINTMENT
             </Button>
           </Grid>

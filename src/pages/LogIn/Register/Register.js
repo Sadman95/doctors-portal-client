@@ -9,13 +9,13 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import { useHistory, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 
 
 const Register = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
 
   const [loginData, setLoginData] = useState({});
@@ -55,7 +55,7 @@ const Register = () => {
       );
       return;
     }
-    registerUser(loginData.name, loginData.email, loginData.password, history);
+    registerUser(loginData.name, loginData.email, loginData.password, navigate);
     // updateUser(loginData.name);
     console.log(loginData);
     e.target.reset();

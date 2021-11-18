@@ -14,7 +14,6 @@ import {
   getIdToken
 } from "firebase/auth";
 import axios from 'axios'
-import { useHistory } from "react-router";
 
 initAuthentication();
 
@@ -23,19 +22,18 @@ const useFirebase = () => {
   const [authError, setAuthError] = useState("");
   const [loading, setLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
-  const history = useHistory();
 
   const auth = getAuth();
 
   /* Create New User / Register User */
-  const registerUser = (name, email, password, history) => {
+  const registerUser = (name, email, password, navigate) => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         setUser(result.user);
         saveNewUser(email, name);
         updateUser(name);
-        history.replace('/');
+        navigate('/');
         console.log(result.user);
       })
       .catch((error) => {
@@ -48,7 +46,7 @@ const useFirebase = () => {
   };
 
   /* Sign In With Email & Password */
-  const signInUser = (email, password) => {
+  const signInUser = (email, password, navigate) => {
     setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
@@ -58,7 +56,7 @@ const useFirebase = () => {
         setAuthError(error.message);
       })
       .finally(() => {
-        history.push('/');
+        navigate('/');
         setLoading(false);
       });
       setAuthError('');
